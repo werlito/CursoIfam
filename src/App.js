@@ -6,7 +6,8 @@ import { useState } from 'react';
 
 function App() {
 
-  const [inputValue, setInputValue] = useState()
+  const [titulo, setTitulo] = useState("")
+  const [descricao, setDescricao] = useState("")
   const [listaTarefa, setListaTarefa] = useState([
     // {
     //   titulo:"isinha",
@@ -16,22 +17,19 @@ function App() {
     // }
   ])
 
-  function handleChange (value) {
-    setInputValue(value)
-  }
-
   function handleClick(){
-    if (inputValue === "") return
-
+    if (titulo === "" || descricao === "" )return
+    
     const novaTarefa = {
-      titulo:inputValue,
-      descricao:"cookie gostozin",
+      titulo:titulo,
+      descricao:descricao,
       image:"https://www.guiadasemana.com.br/contentFiles/image/opt_w320h320/2020/12/FEA/66526_shutterstock-661622035.jpg",
       alt:"isainha num fundo amarelo"
     }
 
     setListaTarefa(prevState => [...prevState, novaTarefa])
-    setInputValue("")
+    setTitulo("")
+    setDescricao("")
 
     console.log('clicou no botão')
   }
@@ -40,14 +38,16 @@ function App() {
   return (
     <div>
       <S.GlobalStyle/>
-      {listaTarefa.map((tarefa, index) => (
-        <ItemCard key={index} {...tarefa}/>
-      ))}
     
     <center>
-      <input type="text" value={inputValue} onChange={(e)=> handleChange(e.target.value)}/>
+      <input type="text" value={titulo} onChange={(e)=> setTitulo(e.target.value)} placeholder="adicionar titulo"/><br></br>
+      <input type="text" value={descricao} onChange={(a)=> setDescricao(a.target.value)} placeholder="adicionar legenda"/><br></br>
       <button onClick={() => handleClick()}>add tarefa</button>
     </center>
+
+    {listaTarefa.map((tarefa, index) => (
+        <ItemCard key={index} {...tarefa}/>
+      ))}
     </div>
   )
 }
